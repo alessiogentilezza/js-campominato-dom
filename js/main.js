@@ -6,20 +6,21 @@ const casellaSelezione = document.getElementById('casellaSelezione');
 // funzione per creazione griglia e colore al click con variabile per le quantità
 
 
+
 let numeriRossi = []; //qui ci finiscono tutti i numeri già usciti
-
-while (numeriRossi.length < 16) {
-    const numeroCasuale = Math.floor(Math.random() * numbreSquare) + 1;
-    if (!numeriRossi.includes(numeroCasuale)) {
-        numeriRossi.push(numeroCasuale);
-        console.log(numeroCasuale);
-    }
-}
-
 
 function griglia(numbreSquare) {
 
     gridDom.innerHTML = '';
+
+    while (numeriRossi.length < 16) {
+        const randomNum = Math.floor(Math.random() * numbreSquare) + 1;
+        if (!numeriRossi.includes(randomNum)) {
+          numeriRossi.push(randomNum);
+          console.log(randomNum);
+        }
+      }
+        
 
     for (let i = 1; i <= numbreSquare; i++) {
 
@@ -38,6 +39,10 @@ function griglia(numbreSquare) {
 
             });
     }
+
+
+
+
 
 }
 
@@ -74,17 +79,13 @@ playGrid.addEventListener('click',
                 }
                 break;
             default:
-                break;     
+                break;
 
         }
 
         for (let i = 0; i < displayShow.length; i++) {
             displayShow[i].classList.toggle('d-flex');
         }
-
-        
-
-
 
     });
 
