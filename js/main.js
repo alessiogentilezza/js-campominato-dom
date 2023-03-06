@@ -6,25 +6,41 @@ const casellaSelezione = document.getElementById('casellaSelezione');
 // funzione per creazione griglia e colore al click con variabile per le quantità
 
 
-function griglia(numbreSquare, newValidRandomNumber ) {    
+let numeriRossi = []; //qui ci finiscono tutti i numeri già usciti
+
+while (numeriRossi.length < 16) {
+    const numeroCasuale = Math.floor(Math.random() * numbreSquare) + 1;
+    if (!numeriRossi.includes(numeroCasuale)) {
+        numeriRossi.push(numeroCasuale);
+        console.log(numeroCasuale);
+    }
+}
+
+
+function griglia(numbreSquare) {
 
     gridDom.innerHTML = '';
 
     for (let i = 1; i <= numbreSquare; i++) {
+
         let elementoGriglia = document.createElement('div');
         elementoGriglia.classList.add("square");
-        gridDom.append(elementoGriglia);   
+        elementoGriglia.append(i);
+
+        gridDom.append(elementoGriglia);
+
 
         elementoGriglia.addEventListener('click',
             function () {
-                this.classList.toggle('bg-blue');
-                elementoGriglia.append(i);
 
-                console.log(i);
-                // console.log(this.innerHTML);
+                this.classList.toggle('bg-blue');
+                // console.log(i);
+
             });
     }
+
 }
+
 
 // al click genera la griglia a seconda della difficoltà e nel valore inserito nella posizione precedente
 // poi assegna la classe 10, 9, 7 a seconda di quanti elementi voglio in linea
@@ -35,10 +51,11 @@ playGrid.addEventListener('click',
         let displayShow = document.getElementsByClassName('square');
         let casellaSelezioneScelta = casellaSelezione.value;
 
+
         switch (casellaSelezioneScelta) {
 
             case 'Difficoltà-1':
-                griglia(100);
+                griglia(10);
                 for (let i = 0; i < displayShow.length; i++) {
                     displayShow[i].classList.add("linea10");
 
@@ -57,11 +74,17 @@ playGrid.addEventListener('click',
                 }
                 break;
             default:
-                break;
+                break;     
+
         }
 
         for (let i = 0; i < displayShow.length; i++) {
             displayShow[i].classList.toggle('d-flex');
         }
 
+        
+
+
+
     });
+
