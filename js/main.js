@@ -3,38 +3,56 @@ const playGrid = document.getElementById('button');
 const casellaSelezione = document.getElementById('casellaSelezione');
 
 
+let numberBlacklist = []; //qui ci finiscono tutti i numeri già usciti
+
+
+function generateRandomNumber(min, max) {
+    const number = Math.floor(Math.random() * (max - min +1)) + min;
+    return number;
+}
+
+function generateUniqueRandomNumber(blacklist, min, max) {
+
+    let isValidNumber = false;
+    let randomNumber;
+
+    while (!isValidNumber) {
+        randomNumber = generateRandomNumber(min, max);
+        if (!blacklist.includes(randomNumber)) {
+            isValidNumber = true;
+        }
+    }
+
+    return randomNumber;
+
+}
+
 // funzione per creazione griglia e colore al click con variabile per le quantità
 
-
-
-let numeriRossi = []; //qui ci finiscono tutti i numeri già usciti
 
 function griglia(numbreSquare) {
 
     gridDom.innerHTML = '';
 
-    while (numeriRossi.length < 16) {
-        const randomNum = Math.floor(Math.random() * numbreSquare) + 1;
-        if (!numeriRossi.includes(randomNum)) {
-          numeriRossi.push(randomNum);
-          console.log(randomNum);
-        }
-      }
-        
-
     for (let i = 1; i <= numbreSquare; i++) {
 
+        const newValidRandomNumber = generateUniqueRandomNumber(numberBlacklist, 1, numbreSquare);
+        numberBlacklist.push(newValidRandomNumber);
+
         let elementoGriglia = document.createElement('div');
-        elementoGriglia.classList.add("square");
-        elementoGriglia.append(i);
+        elementoGriglia.classList.add("square");        
+        // elementoGriglia.append(i);
 
         gridDom.append(elementoGriglia);
+        
+        elementoGriglia.append(newValidRandomNumber);
 
 
         elementoGriglia.addEventListener('click',
             function () {
 
                 this.classList.toggle('bg-blue');
+
                 // console.log(i);
 
             });
