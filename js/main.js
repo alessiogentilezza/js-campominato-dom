@@ -3,36 +3,42 @@ const playGrid = document.getElementById('button');
 const casellaSelezione = document.getElementById('casellaSelezione');
 
 
-let numberBlacklist = []; //qui ci finiscono tutti i numeri già usciti
-
-
-function generateRandomNumber(min, max) {
-    const number = Math.floor(Math.random() * (max - min +1)) + min;
-    return number;
-}
-
-function generateUniqueRandomNumber(blacklist, min, max) {
-
-    let isValidNumber = false;
-    let randomNumber;
-
-    while (!isValidNumber) {
-        randomNumber = generateRandomNumber(min, max);
-        if (!blacklist.includes(randomNumber)) {
-            isValidNumber = true;
-        }
-    }
-
-    return randomNumber;
-
-}
-
 // funzione per creazione griglia e colore al click con variabile per le quantità
 
+let numberBlacklist = []; //qui ci finiscono tutti i numeri già usciti
+
+for (let i = 0; i <= 16; i++) { 
+    console.log(i);
+}
 
 function griglia(numbreSquare) {
 
     gridDom.innerHTML = '';
+
+    // numero casuale
+    function generateRandomNumber(min, max) {
+        const number = Math.floor(Math.random() * (max - min + 1)) + min;
+        return number;
+    }
+
+
+    // numero casuale unico
+
+    function generateUniqueRandomNumber(blacklist, min, max) {
+
+        let isValidNumber = false;
+        let randomNumber;
+
+        while (!isValidNumber) {
+            randomNumber = generateRandomNumber(min, max);
+            if (!blacklist.includes(randomNumber)) {
+                isValidNumber = true;
+            }
+        }
+        return randomNumber;
+    }
+
+    // griglia
 
     for (let i = 1; i <= numbreSquare; i++) {
 
@@ -40,16 +46,25 @@ function griglia(numbreSquare) {
         numberBlacklist.push(newValidRandomNumber);
 
         let elementoGriglia = document.createElement('div');
-        elementoGriglia.classList.add("square");        
-        // elementoGriglia.append(i);
+        elementoGriglia.classList.add("square");
+        elementoGriglia.append(i);
 
         gridDom.append(elementoGriglia);
-        
-        elementoGriglia.append(newValidRandomNumber);
 
+        // elementoGriglia.append(newValidRandomNumber);
 
         elementoGriglia.addEventListener('click',
             function () {
+
+
+                let checNumber = false;
+
+                for (let i = 0; i < numberBlacklist.length; i++) {
+                    if (numberBlacklist[i] == newValidRandomNumber) {
+                        checNumber = true;
+                        this.classList.toggle('bg-red');
+                    }
+                }
 
                 this.classList.toggle('bg-blue');
 
