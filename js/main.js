@@ -7,36 +7,43 @@ const casellaSelezione = document.getElementById('casellaSelezione');
 
 let numberBlacklist = []; //qui ci finiscono tutti i numeri già usciti
 
-for (let i = 0; i <= 16; i++) { 
-    console.log(i);
+let arrayBombe = [];
+
+
+// numero casuale
+function generateRandomNumber(min, max) {
+    const number = Math.floor(Math.random() * (max - min + 1)) + min;
+    return number;
 }
+
+// numero casuale unico
+
+function generateUniqueRandomNumber(blacklist, min, max) {
+
+    let isValidNumber = false;
+    let randomNumber;
+
+    while (!isValidNumber) {
+        randomNumber = generateRandomNumber(min, max);
+        if (!blacklist.includes(randomNumber)) {
+            isValidNumber = true;
+        }
+    }
+    return randomNumber;
+}
+
+
 
 function griglia(numbreSquare) {
 
     gridDom.innerHTML = '';
 
-    // numero casuale
-    function generateRandomNumber(min, max) {
-        const number = Math.floor(Math.random() * (max - min + 1)) + min;
-        return number;
+    for (let i = 1; i <= 16; i++) {
+        const bombeGenerate = generateUniqueRandomNumber(numberBlacklist, 1, numbreSquare);
+        arrayBombe.push(bombeGenerate);
+        console.log(bombeGenerate);
     }
 
-
-    // numero casuale unico
-
-    function generateUniqueRandomNumber(blacklist, min, max) {
-
-        let isValidNumber = false;
-        let randomNumber;
-
-        while (!isValidNumber) {
-            randomNumber = generateRandomNumber(min, max);
-            if (!blacklist.includes(randomNumber)) {
-                isValidNumber = true;
-            }
-        }
-        return randomNumber;
-    }
 
     // griglia
 
@@ -77,6 +84,7 @@ function griglia(numbreSquare) {
 
 
 
+
 }
 
 
@@ -93,7 +101,7 @@ playGrid.addEventListener('click',
         switch (casellaSelezioneScelta) {
 
             case 'Difficoltà-1':
-                griglia(10);
+                griglia(100);
                 for (let i = 0; i < displayShow.length; i++) {
                     displayShow[i].classList.add("linea10");
 
