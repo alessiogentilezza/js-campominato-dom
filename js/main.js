@@ -7,7 +7,6 @@ const casellaSelezione = document.getElementById('casellaSelezione');
 
 let arrayBombe = [];
 
-
 // numero casuale
 function generateRandomNumber(min, max) {
     const number = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -15,7 +14,6 @@ function generateRandomNumber(min, max) {
 }
 
 // numero casuale unico
-
 function generateUniqueRandomNumber(blacklist, min, max) {
 
     let isValidNumber = false;
@@ -39,9 +37,7 @@ function griglia(numbreSquare) {
     for (let i = 1; i <= 16; i++) {
         const bombaGenerata = generateUniqueRandomNumber(arrayBombe, 1, numbreSquare);
         arrayBombe.push(bombaGenerata);
-        console.log(bombaGenerata);
     }
-
 
     // griglia
 
@@ -51,35 +47,29 @@ function griglia(numbreSquare) {
         elementoGriglia.classList.add("square");
         elementoGriglia.append(i);
 
+
+        let bomba = false;
+
         for (let j = 0; j < arrayBombe.length; j++) {
             if (i == arrayBombe[j]) {
-                // console.log("bomba");
+                bomba = true;
+                console.log(i);
             }
         }
 
         gridDom.append(elementoGriglia);
 
-        // elementoGriglia.append(newValidRandomNumber);
 
         elementoGriglia.addEventListener('click',
             function () {
 
-
-                let checNumber = false;
-
-
-                this.classList.toggle('bg-blue');
-
-                // console.log(i);
-
+                if (bomba) {
+                    this.classList.toggle('bg-red');
+                } else {
+                    this.classList.toggle('bg-blue');
+                }
             });
     }
-
-
-
-
-
-
 }
 
 
@@ -116,12 +106,10 @@ playGrid.addEventListener('click',
                 break;
             default:
                 break;
-
         }
 
         for (let i = 0; i < displayShow.length; i++) {
             displayShow[i].classList.toggle('d-flex');
         }
-
     });
 
