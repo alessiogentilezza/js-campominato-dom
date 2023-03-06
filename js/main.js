@@ -1,6 +1,8 @@
 const gridDom = document.getElementById('grid');
 const playGrid = document.getElementById('button');
 const casellaSelezione = document.getElementById('casellaSelezione');
+const sommaDom = document.getElementById('sommaCelle');
+
 
 
 // funzione per creazione griglia e colore al click con variabile per le quantità
@@ -59,18 +61,30 @@ function griglia(numbreSquare) {
 
         gridDom.append(elementoGriglia);
 
-
         elementoGriglia.addEventListener('click',
             function () {
 
                 if (bomba) {
                     this.classList.toggle('bg-red');
+                    removeEventListener('click', function(){});
+                    // alert('Hai cliccato su una bomba');
+
+
                 } else {
                     this.classList.toggle('bg-blue');
+                    sommaCelle += 1;
+                    sommaDom.innerText = `Somma: ${sommaCelle}`;
+
                 }
+                console.log(i);
+
             });
     }
+
 }
+
+let sommaCelle = 0; // Somma delle celle blu cliccate
+
 
 
 // al click genera la griglia a seconda della difficoltà e nel valore inserito nella posizione precedente
