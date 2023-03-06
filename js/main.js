@@ -5,8 +5,6 @@ const casellaSelezione = document.getElementById('casellaSelezione');
 
 // funzione per creazione griglia e colore al click con variabile per le quantità
 
-let numberBlacklist = []; //qui ci finiscono tutti i numeri già usciti
-
 let arrayBombe = [];
 
 
@@ -39,9 +37,9 @@ function griglia(numbreSquare) {
     gridDom.innerHTML = '';
 
     for (let i = 1; i <= 16; i++) {
-        const bombeGenerate = generateUniqueRandomNumber(numberBlacklist, 1, numbreSquare);
-        arrayBombe.push(bombeGenerate);
-        console.log(bombeGenerate);
+        const bombaGenerata = generateUniqueRandomNumber(arrayBombe, 1, numbreSquare);
+        arrayBombe.push(bombaGenerata);
+        console.log(bombaGenerata);
     }
 
 
@@ -49,12 +47,15 @@ function griglia(numbreSquare) {
 
     for (let i = 1; i <= numbreSquare; i++) {
 
-        const newValidRandomNumber = generateUniqueRandomNumber(numberBlacklist, 1, numbreSquare);
-        numberBlacklist.push(newValidRandomNumber);
-
         let elementoGriglia = document.createElement('div');
         elementoGriglia.classList.add("square");
         elementoGriglia.append(i);
+
+        for (let j = 0; j < arrayBombe.length; j++) {
+            if (i == arrayBombe[j]) {
+                // console.log("bomba");
+            }
+        }
 
         gridDom.append(elementoGriglia);
 
@@ -66,12 +67,6 @@ function griglia(numbreSquare) {
 
                 let checNumber = false;
 
-                for (let i = 0; i < numberBlacklist.length; i++) {
-                    if (numberBlacklist[i] == newValidRandomNumber) {
-                        checNumber = true;
-                        this.classList.toggle('bg-red');
-                    }
-                }
 
                 this.classList.toggle('bg-blue');
 
