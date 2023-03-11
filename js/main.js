@@ -9,6 +9,7 @@ const sommaDom = document.getElementById('sommaCelle');
 
 let arrayBombe = [];
 
+
 // numero casuale
 function generateRandomNumber(min, max) {
     const number = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -30,8 +31,6 @@ function generateUniqueRandomNumber(blacklist, min, max) {
     return randomNumber;
 }
 
-
-
 function griglia(numbreSquare) {
 
     gridDom.innerHTML = '';
@@ -41,14 +40,17 @@ function griglia(numbreSquare) {
         arrayBombe.push(bombaGenerata);
     }
 
-    // griglia
+
+
+    /*****************GENERO LA GRIGLIA */
+
+    let gameOver = false;
 
     for (let i = 1; i <= numbreSquare; i++) {
 
         let elementoGriglia = document.createElement('div');
         elementoGriglia.classList.add("square");
         elementoGriglia.append(i);
-
 
         let bomba = false;
 
@@ -61,20 +63,38 @@ function griglia(numbreSquare) {
 
         gridDom.append(elementoGriglia);
 
+        /*****************SCOPRI BOMBE */
+        function scopriBombe(arrayBombe) {
+            const squareDom = document.getElementsByClassName("square")
+            for (let i = 0; i < squareDom.length; i++) {
+                if (arrayBombe.includes((i + 1)))
+                    squareDom[i].classList.add("bg-red");
+            }
+        }
+
         elementoGriglia.addEventListener('click',
             function () {
 
-                if (bomba) {
-                    this.classList.toggle('bg-red');
-                    removeEventListener('click', function(){});
-                    // alert('Hai cliccato su una bomba');
+                if (!gameOver) {
+
+                    if (bomba) {
+                        this.classList.add('bg-red');
+                        scopriBombe(arrayBombe);
+
+                        setTimeout(timer, 1000);
+                        function timer() {
+                            alert('HAI PERSO');
+                        }
+
+                        gameOver = true;
 
 
-                } else {
-                    this.classList.toggle('bg-blue');
-                    sommaCelle += 1;
-                    sommaDom.innerText = `Somma: ${sommaCelle}`;
-
+                    } else {
+                        this.classList.add('bg-blue');
+                        // sommaCelle += 1
+                        sommaCelle++
+                        sommaDom.innerText = `Somma: ${sommaCelle}`;
+                    }
                 }
                 console.log(i);
 
@@ -126,4 +146,3 @@ playGrid.addEventListener('click',
             displayShow[i].classList.toggle('d-flex');
         }
     });
-

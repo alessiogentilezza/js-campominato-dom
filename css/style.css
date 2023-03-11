@@ -97,6 +97,9 @@ footer {
 .d-flex {
     display: flex;
 }
+.d-none {
+    display: none;
+}
 
 
 .bg-blue {
