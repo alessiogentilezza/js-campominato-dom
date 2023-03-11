@@ -9,14 +9,11 @@ const sommaDom = document.getElementById('sommaCelle');
 
 let arrayBombe = [];
 
-
-// numero casuale
 function generateRandomNumber(min, max) {
-    const number = Math.floor(Math.random() * (max - min + 1)) + min;
+    const number = Math.floor(Math.random() * (max - min +1)) + min;
     return number;
 }
 
-// numero casuale unico
 function generateUniqueRandomNumber(blacklist, min, max) {
 
     let isValidNumber = false;
@@ -34,13 +31,12 @@ function generateUniqueRandomNumber(blacklist, min, max) {
 function griglia(numbreSquare) {
 
     gridDom.innerHTML = '';
+    let arrayBombe = [""];
 
     for (let i = 1; i <= 16; i++) {
         const bombaGenerata = generateUniqueRandomNumber(arrayBombe, 1, numbreSquare);
         arrayBombe.push(bombaGenerata);
     }
-
-
 
     /*****************GENERO LA GRIGLIA */
 
